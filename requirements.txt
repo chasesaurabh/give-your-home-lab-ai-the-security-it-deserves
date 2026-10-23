@@ -1,0 +1,2 @@
+# No third-party application packages. Standard library only.
+# The Python runtime and OS remain dependencies; see VERSION_MATRIX.md.

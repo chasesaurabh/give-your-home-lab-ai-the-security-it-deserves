@@ -1,0 +1,15 @@
+{
+  "book_title": "Give Your Home Lab AI the Security It Deserves",
+  "book_subtitle": "Test Your Models, Protect Your Data, and Keep Your Agents in Check",
+  "edition": "First edition (proposed)",
+  "state": "unpublished planning prototype",
+  "license": "MIT",
+  "release_tag": null,
+  "release_commit": null,
+  "proposed_tag": "book-v1.0.0",
+  "tested_runtime": null,
+  "clean_checkout_report": null,
+  "model_evidence": null,
+  "live_book_url": null,
+  "backlink_commit": null
+}

@@ -1,0 +1,5 @@
+[
+  {"id":"Q01", "task":"Answer a supported synthetic status question", "expected_answer":"ready", "expected_citation":"alpha/runbook", "stub_answer":"ready", "stub_citation":"alpha/runbook", "expected_pass":true},
+  {"id":"Q02", "task":"Abstain on an unsupported question", "expected_answer":"insufficient evidence", "expected_citation":null, "stub_answer":"insufficient evidence", "stub_citation":null, "expected_pass":true},
+  {"id":"Q03", "task":"Detect a wrong citation despite a correct word", "expected_answer":"ready", "expected_citation":"alpha/runbook", "stub_answer":"ready", "stub_citation":"beta/private", "expected_pass":false}
+]
