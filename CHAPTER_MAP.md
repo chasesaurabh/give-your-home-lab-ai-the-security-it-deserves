@@ -11,6 +11,6 @@ The eighteen-chapter book direction is approved. Code remains under first-editio
 | 13: provenance | security_lab/recovery.py, fixtures/trusted-manifest.json | Trusted-reference fixture checks and tamper control; no full supply-chain attestation |
 | 14: resource bounds | security_lab/service.py, drills.py | Body/worker/connection and process-local token quota; no GPU cancellation or cross-restart budget |
 | 15: audit | security_lab/policy.py, tests/test_lab.py | Minimal in-memory events; no persistent audit service |
-| 16–18: incident/recovery/release | security_lab/recovery.py, drills.py, edition-manifest.json | Synthetic data-only fresh restore, current revocation checks and code edition book-v1.0.0; book publication pending |
+| 16–18: incident/recovery/release | security_lab/recovery.py, drills.py, edition-manifest.json | Synthetic data-only fresh restore with bounded reads/exact schema version, current revocation checks and code edition book-v1.0.1; book publication pending |
 
 Future work must meet the book's evidence contracts; this table prevents planned features from being described as delivered.
