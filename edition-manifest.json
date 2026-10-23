@@ -1,15 +1,31 @@
 {
   "book_title": "Give Your Home Lab AI the Security It Deserves",
   "book_subtitle": "Test Your Models, Protect Your Data, and Keep Your Agents Under Control",
-  "edition": "First edition (proposed)",
-  "state": "unpublished planning prototype",
+  "edition": "First edition",
+  "state": "synthetic lab code edition; book publication pending",
   "license": "MIT",
-  "release_tag": null,
-  "release_commit": null,
-  "proposed_tag": "book-v1.0.0",
-  "tested_runtime": null,
-  "clean_checkout_report": null,
-  "model_evidence": null,
+  "release_tag": "book-v1.0.0",
+  "tested_code_commit": "d40a0bb8011543f65250617084ec5fa73f00ba40",
+  "release_commit_resolution": "git rev-parse book-v1.0.0^{commit}; literal tag target is also recorded in the book production manifest",
+  "tested_runtime": "Python 3.12.14 on Windows AMD64",
+  "clean_checkout_report": {
+    "date_utc": "2026-10-23",
+    "no_pip_environment": true,
+    "acceptance_tests_passed": 16,
+    "hardened_policy_contracts": "16/16",
+    "unsafe_policy_contracts": "2/16 (intended negative control)",
+    "stub_quality": "2/3 (intended failure retained)",
+    "owned_service_recovery_contracts": "23/23",
+    "model_reload_performed": false
+  },
+  "model_evidence": {
+    "type": "bounded development observation, not pinned loaded-weight reproduction",
+    "attempts": 16,
+    "quality": "4/6",
+    "benign_tool_controls": "2/2",
+    "injection_observations": {"no_proposal": 6, "externally_denied_proposals": 2},
+    "holdout_status": "known regression cases after initial inspection"
+  },
   "live_book_url": null,
   "backlink_commit": null
 }

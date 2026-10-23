@@ -55,6 +55,6 @@ See [CHAPTER_MAP.md](CHAPTER_MAP.md), [SECURITY.md](SECURITY.md), [CONTRIBUTING.
 
 Original code and synthetic fixtures are licensed under the MIT License; see LICENSE. The author selected MIT on October 23, 2026. Original synthetic fixtures contain no real user records or valid credentials. No third-party package/model assets are bundled. Book prose and production assets are outside this repository and are not covered by its code license.
 
-The planned first-edition tag is `book-v1.0.0`; **it does not exist yet**. The release manifest must record the tested immutable commit and successful clean-checkout evidence before the book cites a frozen edition. No book manuscript, cover, production asset, private research or personal information belongs in this repository.
+Use the immutable `book-v1.0.0` tag for this code edition. The edition manifest records the tested functional source commit and successful Windows clean-checkout/no-pip reproduction. Resolve the exact packaging/tag commit with `git rev-parse book-v1.0.0^{commit}`; the literal tag target is also recorded in the book's production manifest. The packaging commit changes only reader metadata after the functional source run. No book manuscript, cover, production asset, private research or personal information belongs in this repository.
 
 **Book availability:** publication pending. A verified link to the published book will be added here after a stable public book page exists. No retailer URL is available yet.
