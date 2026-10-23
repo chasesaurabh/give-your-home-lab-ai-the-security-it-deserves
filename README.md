@@ -1,6 +1,6 @@
 # Local AI Security Lab
 
-Dedicated companion for **Give Your Home Lab AI the Security It Deserves: Test Your Models, Protect Your Data, and Keep Your Agents in Check**.
+Dedicated companion for **Give Your Home Lab AI the Security It Deserves: Test Your Models, Protect Your Data, and Keep Your Agents Under Control**.
 
 **Planning prototype, not the finished book lab.** No real model is loaded or called. This version demonstrates finite in-process application authorization and evidence reporting. It does not authenticate real users, expose a server, provide OS isolation, or establish real-model answer quality, injection resistance, network protection, or resource containment.
 
