@@ -1,8 +1,8 @@
 # Security policy and lab scope
 
-Only test systems you own or are explicitly authorized to test. This prototype has no network client/server and cannot target third parties. Unsafe examples operate only on synthetic in-memory dictionaries. Do not add real documents, tokens, logs, device controls, arbitrary shell execution, or unbounded tools.
+Only test systems you own or are explicitly authorized to test. The default baseline is offline. The owned service drill binds numeric loopback; the optional model client accepts only explicitly selected numeric-loopback endpoints and refuses redirects/proxies. Unsafe examples operate only on synthetic in-memory dictionaries. Do not add real documents, credentials, private logs, device controls, arbitrary shell execution or unbounded tools.
 
-Current limitations: no production identity provider, process isolation, secure secret store, encryption, network boundary, model adapter, persistent audit, deadline or cumulative resource enforcement. The strict policy is a small teaching example and must not be advertised as complete protection.
+Current limitations: no production identity provider, process isolation, secure secret store, encryption, LAN/TLS gateway, persistent audit, cross-restart quota or upstream inference cancellation. Finite connection lifetime and process-local work quota are limited fixture controls. Python http.server is not for production. Policy and model adapter are teaching examples, not complete protection.
 
 Use the repository's private vulnerability-reporting facility if enabled. If it is unavailable, open an issue asking for a private reporting route without posting sensitive details, secrets, exploit data or private logs. A private contact address has not been supplied, so none is invented here. No response-time promise is made for the prototype.
 

@@ -10,7 +10,7 @@ import sys
 ROOT = Path(__file__).resolve().parent.parent
 ROOT_FILES = {".gitignore", ".gitattributes", "README.md", "LICENSE", "SECURITY.md",
               "CONTRIBUTING.md", "VERSION_MATRIX.md", "CHAPTER_MAP.md",
-              "requirements.txt", "edition-manifest.json"}
+              "requirements.txt", "edition-manifest.json", "LAB_GUIDE.md"}
 DIRECTORIES = {"security_lab", "fixtures", "tests", "scripts"}
 PATTERNS = {
     "github_token": r"\b(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,})\b",
@@ -25,7 +25,7 @@ PATTERNS = {
 def inspect():
     files, findings, modules = [], [], set()
     for entry in sorted(ROOT.iterdir()):
-        if entry.name in {".git", "reports", "__pycache__"}:
+        if entry.name in {".git", "reports", "__pycache__", ".venv"}:
             continue
         if entry.is_file() and entry.name in ROOT_FILES:
             files.append(entry)

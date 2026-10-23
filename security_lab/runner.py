@@ -25,6 +25,8 @@ def load_fixture(name):
 
 
 def build_report():
+    from .recovery import verify_packaged_fixtures
+    verify_packaged_fixtures(ROOT / "fixtures")
     # Hash exactly the fixture bytes consumed below, not a later reread.
     fixture_bytes = {p.name: p.read_bytes() for p in sorted((ROOT / "fixtures").glob("*.json"))}
     fixtures = {name: json.loads(raw) for name, raw in fixture_bytes.items()}
