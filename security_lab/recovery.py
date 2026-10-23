@@ -36,11 +36,15 @@ def make_backup(documents, destination):
 
 
 def restore_backup(source, expected_digest, destination):
-    raw = Path(source).read_bytes()
+    # Read one byte beyond the acceptance limit to detect overflow without
+    # first materializing an arbitrarily large local file in process memory.
+    with Path(source).open("rb") as incoming:
+        raw = incoming.read(65537)
     if len(raw) > 65536 or digest(raw) != expected_digest:
         raise ValueError("Backup size or digest mismatch")
     value = strict_json(raw)
-    if type(value) is not dict or set(value) != {"schema","documents"} or value["schema"] != 1:
+    if (type(value) is not dict or set(value) != {"schema","documents"}
+            or type(value["schema"]) is not int or value["schema"] != 1):
         raise ValueError("Backup schema")
     documents = value["documents"]
     if type(documents) is not dict or any(type(k) is not str or type(v) is not dict for k,v in documents.items()):

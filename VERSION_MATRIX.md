@@ -7,7 +7,7 @@
 | Third-party Python dependencies | None; requirements.txt records the empty application dependency set |
 | Python/OS vulnerabilities | Not covered by an empty package set; review maintained patches and official advisories before release |
 | Models / serving runtimes | Finite local run with vLLM 0.30.0 and alias nemotron-super-120b-fp4. Read-only server configuration names NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4; alias/provider metadata do not attest loaded weights. |
-| Containers | Not used by this prototype |
+| Containers | Core lab needs none; the separate model runtime was observed in a container read-only. No container-isolation test is claimed. |
 | Linux / macOS | Not tested |
 | Security/dependency audit tools | Gitleaks 8.30.1 staged/history scans plus bounded privacy/import preflight; no complete runtime/OS vulnerability audit implied |
 

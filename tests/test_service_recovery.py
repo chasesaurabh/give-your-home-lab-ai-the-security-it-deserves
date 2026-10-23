@@ -1,4 +1,5 @@
 import http.client
+import hashlib
 import json
 from pathlib import Path
 import secrets
@@ -32,6 +33,37 @@ def post(server, token=None, value=STATUS, headers=None):
 
 
 class TransportAndRecoveryTests(unittest.TestCase):
+    def test_restore_size_boundary_keeps_oversized_target_uncreated(self):
+        with tempfile.TemporaryDirectory() as directory:
+            folder=Path(directory)
+            empty=json.dumps({"schema":1,"documents":{"alpha":{"runbook":""}}}).encode()
+            raw=json.dumps({"schema":1,"documents":{"alpha":{"runbook":"x"*(65536-len(empty))}}}).encode()
+            self.assertEqual(len(raw),65536)
+            backup=folder/"backup.json"
+            backup.write_bytes(raw)
+            result=restore_backup(backup,hashlib.sha256(raw).hexdigest(),folder/"accepted.json")
+            self.assertTrue(result["alpha"]["runbook"])
+            # Whitespace keeps the JSON valid and the supplied digest matches.
+            # Size must independently reject this otherwise acceptable input.
+            oversized=raw+b" "
+            backup.write_bytes(oversized)
+            rejected=folder/"rejected.json"
+            with self.assertRaisesRegex(ValueError,"size or digest"):
+                restore_backup(backup,hashlib.sha256(oversized).hexdigest(),rejected)
+            self.assertFalse(rejected.exists())
+
+    def test_restore_schema_version_rejects_boolean_float_and_other_values(self):
+        with tempfile.TemporaryDirectory() as directory:
+            folder=Path(directory)
+            for number,value in enumerate([True,False,1.0,"1",None,0,2]):
+                with self.subTest(schema=value):
+                    raw=json.dumps({"schema":value,"documents":{"alpha":{"runbook":"ready"}}}).encode()
+                    backup=folder/"backup.json";backup.write_bytes(raw)
+                    target=folder/f"result-{number}.json"
+                    with self.assertRaisesRegex(ValueError,"Backup schema"):
+                        restore_backup(backup,hashlib.sha256(raw).hexdigest(),target)
+                    self.assertFalse(target.exists())
+
     def test_raw_framing_and_json_rejections_reach_intended_guard(self):
         with owned_service(work_limit=30) as server:
             token=next(iter(server.credentials))

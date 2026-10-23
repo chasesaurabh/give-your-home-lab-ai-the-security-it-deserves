@@ -67,7 +67,7 @@ def inspect():
             "imports": sorted(modules), "third_party_imports": external,
             "findings": findings,
             "limitations": ["Pattern checks miss many secrets and personal-data forms.",
-                            "No git history exists yet; history must be scanned before release.",
+                            "This preflight does not scan Git history; run a separate history scanner.",
                             "Import inventory is not a vulnerability-database audit.",
                             "Python runtime and OS require separate patch/advisory review.",
                             "Manual private-data and license review remains required."]}
