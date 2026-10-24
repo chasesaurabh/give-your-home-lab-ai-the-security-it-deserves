@@ -2,7 +2,14 @@
 
 Dedicated companion for **Give Your Home Lab AI the Security It Deserves: Test Your Models, Protect Your Data, and Keep Your Agents Under Control**.
 
-Bench is a dedicated synthetic local AI security lab, still under book-edition review. It separates task quality from security contracts, compares in-process unsafe/hardened controls, and rehearses owned HTTP, provenance and recovery boundaries. An optional local-model adapter has measured finite synthetic cases. This is educational code, not a production service, sandbox, certification or promise of perfect security.
+## Get the book
+
+First edition by Saurabh Chase, available on Amazon.com:
+
+- [Kindle edition](https://www.amazon.com/dp/B0HP3F4NW1)
+- [Paperback edition](https://www.amazon.com/dp/B0HP3HY5MR)
+
+Bench is a dedicated synthetic local AI security lab. It separates task quality from security contracts, compares in-process unsafe/hardened controls, and rehearses owned HTTP, provenance and recovery boundaries. An optional local-model adapter has measured finite synthetic cases. This is educational code, not a production service, sandbox, certification or promise of perfect security.
 
 ## Run the lab
 
@@ -87,5 +94,3 @@ Original private evidence file SHA-256: 561f2b0c8619bfa1429845f3ed8a6cadecd7629d
 Original code and synthetic fixtures are licensed under the MIT License; see LICENSE. The author selected MIT on October 23, 2026. Original synthetic fixtures contain no real user records or valid credentials. No third-party package/model assets are bundled. Book prose and production assets are outside this repository and are not covered by its code license.
 
 Use the immutable `book-v1.0.1` tag for this code edition. The earlier book-v1.0.0 tag remains available; this patch bounds backup reads and requires an exact integer schema version, with two added acceptance tests. The edition manifest records the tested functional source commit and successful Windows clean-checkout/no-pip reproduction. Resolve the exact packaging/tag commit with `git rev-parse book-v1.0.1^{commit}`; the literal tag target is also recorded in the book's production manifest. The packaging commit changes only reader metadata after the functional source run. No book manuscript, cover, production asset, private research or personal information belongs in this repository.
-
-**Book availability:** publication pending. A verified link to the published book will be added here after a stable public book page exists. No retailer URL is available yet.
