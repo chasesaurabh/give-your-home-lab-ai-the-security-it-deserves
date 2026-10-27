@@ -69,7 +69,7 @@ def build_report():
               and all(q["matches_known_demonstration"] for q in quality))
     sources = sorted((ROOT / "security_lab").glob("*.py"))
     return {
-        "schema_version": 1, "state": "planning prototype; no edition release",
+        "schema_version": 1, "state": "synthetic companion lab; see edition-manifest.json for book edition",
         "run_utc": datetime.now(timezone.utc).isoformat(),
         "environment": {"python": platform.python_version(), "os": platform.system(),
                         "os_version": platform.version(), "machine": platform.machine()},
@@ -95,7 +95,7 @@ def render_html(report):
             "<style>body{font:17px system-ui;max-width:70rem;margin:2rem auto;padding:0 1rem}"
             "pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f2f3f4;padding:1rem}"
             "h1{line-height:1.2}</style><h1>Local AI Security Lab evidence</h1>"
-            "<p>Planning prototype: synthetic in-process controls and fixed stub answers.</p>"
+            "<p>Synthetic companion lab: in-process controls and fixed stub answers.</p>"
             f"<h2>Quality: {q['passed']}/{q['total']} fixed examples satisfy the rubric</h2>"
             "<p>One wrong citation deliberately fails. These are not model results.</p>"
             f"<h2>Security contracts: hardened {h['matched']}/{h['total']}; "

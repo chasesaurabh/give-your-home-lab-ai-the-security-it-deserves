@@ -11,6 +11,10 @@ First edition by Saurabh Chase, available on Amazon.com:
 
 Bench is a dedicated synthetic local AI security lab. It separates task quality from security contracts, compares in-process unsafe/hardened controls, and rehearses owned HTTP, provenance and recovery boundaries. An optional local-model adapter has measured finite synthetic cases. This is educational code, not a production service, sandbox, certification or promise of perfect security.
 
+![Actual synthetic security-lab report with separate quality and policy results](docs/images/m3-preview.jpg)
+
+Actual generated report from Windows and CPython 3.12.14 on October 26, 2026. The quality results are fixed stub fixtures, and the controls are synthetic; this is not a model benchmark or a production security claim. The current branch corrects old report release labels; the frozen book tags remain unchanged.
+
 ## Run the lab
 
 Install Python 3.12 from its official distributor, with an appropriate maintained security patch. Only Python's standard library is needed; no package installation, model weights, Docker or cloud key is required. Run these commands from this directory:
@@ -94,3 +98,7 @@ Original private evidence file SHA-256: 561f2b0c8619bfa1429845f3ed8a6cadecd7629d
 Original code and synthetic fixtures are licensed under the MIT License; see LICENSE. The author selected MIT on October 23, 2026. Original synthetic fixtures contain no real user records or valid credentials. No third-party package/model assets are bundled. Book prose and production assets are outside this repository and are not covered by its code license.
 
 Use the immutable `book-v1.0.1` tag for this code edition. The earlier book-v1.0.0 tag remains available; this patch bounds backup reads and requires an exact integer schema version, with two added acceptance tests. The edition manifest records the tested functional source commit and successful Windows clean-checkout/no-pip reproduction. Resolve the exact packaging/tag commit with `git rev-parse book-v1.0.1^{commit}`; the literal tag target is also recorded in the book's production manifest. The packaging commit changes only reader metadata after the functional source run. No book manuscript, cover, production asset, private research or personal information belongs in this repository.
+
+## Choose your next project
+
+[Start here: choose a Practical AI Home Lab book](https://github.com/chasesaurabh/give-your-home-labs-ai-a-memory/blob/codex/memory-companion/docs/start-here.md), or [browse the series on Amazon](https://www.amazon.com/dp/B0HP7F73K4). Each book can be read on its own.
