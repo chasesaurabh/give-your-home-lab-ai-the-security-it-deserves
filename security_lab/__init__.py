@@ -1,1 +1,1 @@
-"""Offline, synthetic Local AI Security Lab planning prototype."""
+"""Synthetic Local AI Security Lab with separate optional owned-model exercises."""

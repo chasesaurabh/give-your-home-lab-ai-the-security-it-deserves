@@ -1,5 +1,6 @@
 """Small strict JSON and loopback-only transport helpers."""
 import json
+import math
 from urllib.parse import urlsplit
 from urllib.request import ProxyHandler, HTTPRedirectHandler, build_opener
 
@@ -14,7 +15,14 @@ def strict_json(raw):
         return result
     def reject_constant(value):
         raise ValueError("Non-finite JSON constant")
-    return json.loads(raw, object_pairs_hook=pairs, parse_constant=reject_constant)
+    def finite_float(value):
+        # Valid JSON numeric syntax can still overflow a Python float.
+        parsed = float(value)
+        if not math.isfinite(parsed):
+            raise ValueError("JSON number exceeds finite float range")
+        return parsed
+    return json.loads(raw, object_pairs_hook=pairs,
+                      parse_constant=reject_constant, parse_float=finite_float)
 
 
 def local_endpoint(value):

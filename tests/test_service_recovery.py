@@ -75,7 +75,8 @@ class TransportAndRecoveryTests(unittest.TestCase):
                 ([("Content-Length","2"),("Content-Type","text/plain")],b"{}",415,"content_type"),
                 ([("Content-Length","5")],b"[1,2]",400,"request_schema"),
                 ([("Content-Length","25")],b'{"proposal":null,"x":NaN}',400,"json"),
-                ([],b'{"proposal":null,"proposal":null}',400,"json")]
+                ([],b'{"proposal":null,"proposal":null}',400,"json"),
+                ([],b'{"proposal":{"tool":"status","args":{"target":1e400}}}',400,"json")]
             for headers,body,expected,reason in scenarios:
                 with self.subTest(reason=reason,headers=[h[0] for h in headers]):
                     # For the non-finite case compute the exact wire length too.

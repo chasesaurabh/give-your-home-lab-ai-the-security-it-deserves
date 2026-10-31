@@ -1,31 +1,84 @@
 {
   "book_title": "Give Your Home Lab AI the Security It Deserves",
   "book_subtitle": "Test Your Models, Protect Your Data, and Keep Your Agents Under Control",
-  "edition": "First edition",
-  "state": "synthetic lab code edition; book publication pending",
+  "edition": "Second edition",
+  "state": "synthetic educational code snapshot; book publication is separate",
   "license": "MIT",
-  "release_tag": "book-v1.0.1",
-  "tested_code_commit": "f8257c09f83aa38aec6f47301f8ae8957343d2cd",
-  "release_commit_resolution": "git rev-parse book-v1.0.1^{commit}; literal tag target is also recorded in the book production manifest",
+  "release_tag": "book-v2.0.0",
+  "historical_release": {
+    "tag": "book-v1.0.1",
+    "commit": "ae27e059ebc71424b42bb0eb3b8bf61394a310c2",
+    "evidence": {
+      "date_utc": "2026-10-23",
+      "no_pip_environment": true,
+      "acceptance_tests_passed": 18,
+      "hardened_policy_contracts": "16/16",
+      "unsafe_policy_contracts": "2/16 (intended negative control)",
+      "stub_quality": "2/3 (intended failure retained)",
+      "owned_service_recovery_contracts": "23/23",
+      "model_reload_performed": false
+    },
+    "model_evidence": {
+      "type": "bounded development observation, not pinned loaded-weight reproduction",
+      "attempts": 16,
+      "quality": "4/6",
+      "benign_tool_controls": "2/2",
+      "injection_observations": {
+        "no_proposal": 6,
+        "externally_denied_proposals": 2
+      },
+      "holdout_status": "known regression cases after initial inspection"
+    }
+  },
   "tested_runtime": "Python 3.12.14 on Windows AMD64",
-  "clean_checkout_report": {
-    "date_utc": "2026-10-23",
-    "no_pip_environment": true,
-    "acceptance_tests_passed": 18,
+  "current_evidence": {
+    "date_utc": "2026-10-30",
+    "acceptance_tests_passed": 23,
     "hardened_policy_contracts": "16/16",
     "unsafe_policy_contracts": "2/16 (intended negative control)",
     "stub_quality": "2/3 (intended failure retained)",
     "owned_service_recovery_contracts": "23/23",
-    "model_reload_performed": false
+    "cpu_model_attempts": 16,
+    "cpu_model_quality": "2/6",
+    "cpu_legitimate_tool_controls": "0/2",
+    "cpu_injection_no_proposal": "8/8",
+    "cpu_lifecycle": "fresh model-volume download, stopped-provider failure, restarted schema-valid response, owned cleanup; cached runtime image",
+    "clean_final_checkout": "Clean local clone d6efd63fdf27bb79ac5efc750fbc67cf27c40be9; no-pip venv;22tests/23drills; CPU lifecycle and same2/6quality,0/2tool,8/8no-proposal outcomes with cached model. This is a historical pre-correction checkout. A subsequent partial-setup ownership-record correction and regression test have been verified separately; the corrected-code reproduction below supplies the later complete lifecycle. Public main 4d89e2c reader guidance was then reconciled; runner changes only two report-label strings. Final archive tests and hash verification are recorded separately.",
+    "partial_setup_correction": {
+      "date_utc": "2026-10-31",
+      "method": "Injected create/cleanup failures after actual owned Docker network acquisition; no model/container run.",
+      "before": "Network ID absent from failed result.",
+      "after": "Exact network ID retained. Harness removed owned network and verified absence.",
+      "tests": 23
+    },
+    "corrected_code_reproduction": {
+      "date_utc": "2026-10-31",
+      "private_source_commit": "9e81f276001dd63c51894543a3000d03ee4cd473",
+      "environment": "Clean Git archive and new no-pip environment; cached runtime and model volume. Windows Python 3.12.14.",
+      "acceptance_tests_passed": 23,
+      "owned_service_recovery_contracts": "23/23",
+      "cpu_attempts": 16,
+      "quality": "2/6",
+      "legitimate_tool_controls": "0/2",
+      "injection_no_proposal": "8/8",
+      "lifecycle": "Startup, evaluation, stopped-provider failure and schema-valid restart; exact container/network absence independently verified.",
+      "implementation_identity": "All implementation_sha256 values match the executed clean archive. Public acquisition remains separate."
+    }
   },
-  "model_evidence": {
-    "type": "bounded development observation, not pinned loaded-weight reproduction",
-    "attempts": 16,
-    "quality": "4/6",
-    "benign_tool_controls": "2/2",
-    "injection_observations": {"no_proposal": 6, "externally_denied_proposals": 2},
-    "holdout_status": "known regression cases after initial inspection"
+  "implementation_sha256": {
+    "security_lab/__init__.py": "20bf0ec429a4a7d688c7009128dc61214fa29962a03af58cda469b6f59adaa6b",
+    "security_lab/__main__.py": "37a12b60edfe93fbe3e447e8c89a4334201ade35227db85fd0484c571faf0dcf",
+    "security_lab/drills.py": "317a68953d531df30eff3dd8192fff314b1b9b25f0afbea5a1b606f3cc9c0517",
+    "security_lab/model_eval.py": "487297416f757d780589e494be0d70b3b348e19640e90bc48efd199db6334fc1",
+    "security_lab/policy.py": "a30c9cdd3689d8161b224121ca29507b372ddcc14a359d04705c0f2e7a537cfc",
+    "security_lab/protocol.py": "926fd73c20f06db838c20ac86ad1b08bb8badc3f08b896370533265e08a8541c",
+    "security_lab/recovery.py": "b77d4dbc79928a452fbe26c7e0fb4063c1b8f0d2e63b4ddd1482946757165baf",
+    "security_lab/runner.py": "f6077e466d3645ee405a914b35c0de171e2d3b487a56a4978eca4ec5b4792567",
+    "security_lab/service.py": "2c4cdb96e28597ba127e5aebae1f59726cbeff63f4950033ba04b9797d5e5706",
+    "security_lab/starter.py": "a5275bdf02c245d40628fd27423f2e94ec97347b5c38764622b79aaea873a142"
   },
-  "live_book_url": null,
-  "backlink_commit": null
+  "live_second_edition_book_url": null,
+  "limits": "Finite observed cases; no guarantee of model usefulness or complete security. Version matrix records environment and reproduction limits.",
+  "release_commit_resolution": "git rev-parse book-v2.0.0^{commit}; verify against the book or release record",
+  "implementation_hash_encoding": "UTF-8 with LF line endings, as specified by repository .gitattributes"
 }

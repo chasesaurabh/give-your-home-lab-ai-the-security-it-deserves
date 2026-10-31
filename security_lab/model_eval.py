@@ -33,18 +33,31 @@ def validate_response(value):
     return value
 
 
-def evaluate_case(endpoint, model, case, repeat):
+def request_payload(model, case, provider="vllm"):
+    if provider not in {"vllm", "ollama"}:
+        raise ValueError("Unsupported provider adapter")
     payload = {"model": model, "messages": [{"role": "system", "content": SYSTEM},
                 {"role": "user", "content": case["question"] + "\n\n" + case["context"]}],
-               "temperature": 0, "seed": 17, "max_tokens": 256,
-               "chat_template_kwargs": {"enable_thinking": False}}
+               "temperature": 0, "seed": 17, "max_tokens": 256}
+    if provider == "vllm":
+        payload["chat_template_kwargs"] = {"enable_thinking": False}
+    # Ollama's instruct model needs no vLLM-specific template extension.
+    # No JSON repair, grammar enforcement or response-format constraint is added.
+    return payload
+
+
+def evaluate_case(endpoint, model, case, repeat, provider="vllm", timeout=60):
+    endpoint = local_endpoint(endpoint)
+    if not 1 <= timeout <= 180:
+        raise ValueError("Use a socket timeout between 1 and 180 seconds")
+    payload = request_payload(model, case, provider)
     request = Request(endpoint + "/chat/completions", data=json.dumps(payload).encode(),
                       headers={"Content-Type": "application/json"}, method="POST")
     row = {"id": case["id"], "split": case["split"], "kind": case["kind"],
            "repeat": repeat, "request_sha256": hashlib.sha256(request.data).hexdigest()}
     start = time.monotonic()
     try:
-        with local_opener().open(request, timeout=60) as response:
+        with local_opener().open(request, timeout=timeout) as response:
             raw = response.read(65537)
         if len(raw) > 65536:
             raise ValueError("Provider response exceeds evidence limit")
@@ -74,12 +87,14 @@ def evaluate_case(endpoint, model, case, repeat):
     return row
 
 
-def run(endpoint, model, destination, repeats=2):
+def run(endpoint, model, destination, repeats=2, provider="vllm", timeout=60):
     from .recovery import verify_packaged_fixtures
     verify_packaged_fixtures(ROOT / "fixtures")
     endpoint = local_endpoint(endpoint)
     if not 1 <= repeats <= 3:
         raise ValueError("Use 1 to 3 finite repeats")
+    if provider not in {"vllm", "ollama"} or not 1 <= timeout <= 180:
+        raise ValueError("Unsupported provider or socket timeout")
     folder = Path(destination)
     folder.mkdir(parents=True, exist_ok=False)
     cases = load_fixture("model_cases.json")
@@ -87,7 +102,7 @@ def run(endpoint, model, destination, repeats=2):
     with (folder / "observations.jsonl").open("x", encoding="utf-8") as evidence:
         for repeat in range(1, repeats + 1):
             for case in cases:
-                row = evaluate_case(endpoint, model, case, repeat)
+                row = evaluate_case(endpoint, model, case, repeat, provider, timeout)
                 rows.append(row)
                 evidence.write(json.dumps(row) + "\n")
                 evidence.flush()
@@ -99,7 +114,12 @@ def run(endpoint, model, destination, repeats=2):
               "requested_model_alias": model, "python": platform.python_version(),
               "system_prompt_sha256": hashlib.sha256(SYSTEM.encode()).hexdigest(),
               "corpus_sha256": hashlib.sha256((ROOT / "fixtures/model_cases.json").read_bytes()).hexdigest(),
-              "parameters": {"temperature":0, "seed":17, "max_tokens":256, "enable_thinking":False},
+              "provider_adapter": provider,
+              "parameters": {"temperature":0, "seed":17, "max_tokens":256,
+                             "vllm_enable_thinking":False if provider == "vllm" else None,
+                             "socket_timeout_seconds":timeout, "response_format_constraint":None},
+              "source_sha256": {name:hashlib.sha256((ROOT/"security_lab"/name).read_bytes()).hexdigest()
+                                for name in ["model_eval.py", "protocol.py", "policy.py"]},
               "counts": {"attempts":len(rows), "errors":sum(r["status"] == "error" for r in rows),
                          "quality_pass":sum(r.get("quality_pass",False) for r in quality),
                          "quality_total":len(quality), "allow_control_pass":sum(r.get("allowed_control_pass",False) for r in controls),
@@ -127,7 +147,9 @@ if __name__ == "__main__":
     parser.add_argument("--model",required=True)
     parser.add_argument("--output",required=True)
     parser.add_argument("--repeats",type=int,default=2)
+    parser.add_argument("--provider",choices=["vllm","ollama"],default="vllm")
+    parser.add_argument("--timeout",type=int,default=60)
     args=parser.parse_args()
-    report=run(args.endpoint,args.model,args.output,args.repeats)
+    report=run(args.endpoint,args.model,args.output,args.repeats,args.provider,args.timeout)
     print(json.dumps(report["counts"]))
     raise SystemExit(1 if report["counts"]["errors"] else 0)

@@ -2,7 +2,11 @@
 
 Dedicated companion for **Give Your Home Lab AI the Security It Deserves: Test Your Models, Protect Your Data, and Keep Your Agents Under Control**.
 
-## Get the book
+## Edition identity
+
+Code edition: `book-v2.0.0`, prepared for the second edition. Check the release commit and `edition-manifest.json` before following a particular book edition. The first-edition tag `book-v1.0.1` does not contain the CPU starter. Book publication is separate from code availability.
+
+## First-edition book links
 
 First edition by Saurabh Chase, available on Amazon.com:
 
@@ -13,7 +17,7 @@ Bench is a dedicated synthetic local AI security lab. It separates task quality 
 
 ![Actual synthetic security-lab report with separate quality and policy results](docs/images/m3-preview.jpg)
 
-Actual generated report from Windows and CPython 3.12.14 on October 26, 2026. The quality results are fixed stub fixtures, and the controls are synthetic; this is not a model benchmark or a production security claim. The current branch corrects old report release labels; the frozen book tags remain unchanged.
+Historical first-edition generated report from Windows and CPython 3.12.14 on October 26, 2026. The quality results are fixed stub fixtures, and the controls are synthetic; this is not a model benchmark or a production security claim. The current branch corrects old report release labels; the frozen book tags remain unchanged.
 
 ## Run the lab
 
@@ -44,19 +48,23 @@ The baseline work-step value is a logical test input, not metered CPU/GPU work, 
 python -m security_lab.drills --output reports/drills
 ```
 
-This command starts its own temporary loopback-only HTTP fixture and disposable synthetic state, then cleans up/stops them. The service has a strict Host check, rejects Origin, validates JSON framing/schema, uses a 4,096-byte body limit, defaults to four workers and a two-second connection timer, and permits eight charged requests per ephemeral token for that process lifetime. The in-memory audit keeps at most 64 minimal events. The drill uses special smaller limits and reports its settings. It includes tamper rejection, data-only backup, fresh restore and preserved revocation. Development evidence matched 23/23 finite drill contracts; the acceptance suite passed 18 tests. The timer is subject to OS scheduling, not a hard real-time guarantee.
+This command starts its own temporary loopback-only HTTP fixture and disposable synthetic state, then cleans up/stops them. The service has a strict Host check, rejects Origin, validates JSON framing/schema, uses a 4,096-byte body limit, defaults to four workers and a two-second connection timer, and permits eight charged requests per ephemeral token for that process lifetime. The in-memory audit keeps at most 64 minimal events. The drill uses special smaller limits and reports its settings. It includes tamper rejection, data-only backup, fresh restore and preserved revocation. Development evidence matched 23/23 finite drill contracts; the refreshed acceptance suite passed 23 tests, including the partial-setup ownership-reference regression. The timer is subject to OS scheduling, not a hard real-time guarantee.
 
 Python http.server is explicitly unsuitable for production. No TLS, LAN/firewall rule, reverse proxy, real model backend, OS isolation, secure secret store, encrypted backup or durable audit is supplied. A separately running model service retains its own bypass/exposure risks. Current revocation policy remains outside data backups.
 
+## CPU starter
+
+For a complete optional first-model setup, follow [STARTER_GUIDE.md](STARTER_GUIDE.md). It creates an owned CPU-only Docker model service, evaluates the known cases, checks stopped-provider failure/recovery and cleans its container/network. It preserves the model volume and evidence. A lifecycle pass does not mean model quality passed. The historical first-edition tag does not contain this starter.
+
 ## Optional owned-model evaluation
 
-Only use an endpoint you own or are explicitly authorized to test. Replace port and alias with your actual numeric-loopback server. The client refuses remote hosts, inherited proxies and redirects. The chat-completions request includes a vLLM-compatible template option; other runtimes need a reviewed adapter.
+Only use an endpoint you own or are explicitly authorized to test. Replace port and alias with your actual numeric-loopback server. The client refuses remote hosts, inherited proxies and redirects. The default vLLM adapter includes its template option. Select `--provider ollama` for the reviewed Ollama adapter; other runtimes need separate verification.
 
 ```powershell
 python -m security_lab.model_eval --endpoint http://127.0.0.1:8100/v1 --model YOUR_LOCAL_ALIAS --repeats 2 --output reports/model
 ```
 
-Requests are sequential, at most three repeats over eight synthetic cases, with 256 requested output tokens. The read timeout does not establish a hard inference deadline or server-side cancellation. The development run had 16 parsed attempts: 4/6 quality attempts passed the exact answer/citation rubric; 2/2 benign status proposals worked; among eight injection attempts, six emitted no proposal and two emitted cross-project proposals denied by external policy. Preserve wrong citations and rejected proposals. Temperature-zero repeats are not independent statistical trials, and these repository-visible holdout cases cease to be unseen after inspection.
+Requests are sequential, at most three repeats over eight synthetic cases, with 256 requested output tokens. The read timeout does not establish a hard inference deadline or server-side cancellation. The historical October 23 vLLM run had 16 parsed attempts: 4/6 quality attempts passed the exact answer/citation rubric; 2/2 benign status proposals worked; among eight injection attempts, six emitted no proposal and two emitted cross-project proposals denied by external policy. Preserve wrong citations and rejected proposals. Temperature-zero repeats are not independent statistical trials, and these repository-visible holdout cases cease to be unseen after inspection.
 
 Read LAB_GUIDE.md before interpreting reports. The fixture manifest detects changes relative to the separately trusted code edition; it is not an authenticity signature. Raw synthetic model output is evaluation evidence, separate from minimal application audit events. Never substitute private prompts or credentials into these fixtures without a different data/retention design.
 
@@ -64,7 +72,7 @@ See [CHAPTER_MAP.md](CHAPTER_MAP.md), [SECURITY.md](SECURITY.md), [CONTRIBUTING.
 
 ## Recorded synthetic model observations
 
-This is a curated transcription of the actual first development run on October 23, 2026. It is evidence to inspect, not a new execution or an assertion that choosing the same alias reproduces loaded weights. The corpus/prompt were not tuned after these failures. The core lab can be reproduced without this separately operated model.
+This is a curated transcription of the actual first development run on October 23, 2026. It is evidence to inspect, not a new execution or an assertion that choosing the same alias reproduces loaded weights. The corpus/prompt were not tuned after these failures. The core lab can be reproduced without this separately operated model. The October 30 CPU starter used a different model and returned different results: 2/6 quality attempts passed, 0/2 legitimate tool controls passed, and all eight injection attempts produced no proposal. See STARTER_GUIDE.md and VERSION_MATRIX.md. Do not merge the runs.
 
 The run requested temperature 0, seed 17, max_tokens 256 and enable_thinking false. Quality passed 4/6; legitimate status controls passed 2/2; eight injection attempts produced six absent proposals and two externally denied cross-project proposals. No request/parse errors occurred. Repeats are not independent statistical trials.
 
@@ -97,7 +105,7 @@ Original private evidence file SHA-256: 561f2b0c8619bfa1429845f3ed8a6cadecd7629d
 
 Original code and synthetic fixtures are licensed under the MIT License; see LICENSE. The author selected MIT on October 23, 2026. Original synthetic fixtures contain no real user records or valid credentials. No third-party package/model assets are bundled. Book prose and production assets are outside this repository and are not covered by its code license.
 
-Use the immutable `book-v1.0.1` tag for this code edition. The earlier book-v1.0.0 tag remains available; this patch bounds backup reads and requires an exact integer schema version, with two added acceptance tests. The edition manifest records the tested functional source commit and successful Windows clean-checkout/no-pip reproduction. Resolve the exact packaging/tag commit with `git rev-parse book-v1.0.1^{commit}`; the literal tag target is also recorded in the book's production manifest. The packaging commit changes only reader metadata after the functional source run. No book manuscript, cover, production asset, private research or personal information belongs in this repository.
+Use the immutable `book-v2.0.0` tag for this code edition and verify its commit against the book or release record. The earlier book-v1.0.0 and book-v1.0.1 tags remain historical references. This revision adds the CPU starter, provider-specific request handling and strict numeric-overflow rejection. The edition manifest separates historical and current evidence. No book manuscript, cover, production asset, private research or personal information belongs in this repository.
 
 ## Choose your next project
 

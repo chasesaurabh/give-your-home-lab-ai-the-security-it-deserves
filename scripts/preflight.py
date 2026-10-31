@@ -10,8 +10,10 @@ import sys
 ROOT = Path(__file__).resolve().parent.parent
 ROOT_FILES = {".gitignore", ".gitattributes", "README.md", "LICENSE", "SECURITY.md",
               "CONTRIBUTING.md", "VERSION_MATRIX.md", "CHAPTER_MAP.md",
-              "requirements.txt", "edition-manifest.json", "LAB_GUIDE.md"}
-DIRECTORIES = {"security_lab", "fixtures", "tests", "scripts"}
+              "requirements.txt", "edition-manifest.json", "LAB_GUIDE.md", "STARTER_GUIDE.md"}
+DIRECTORIES = {"security_lab", "fixtures", "tests", "scripts", "docs"}
+# Existing public synthetic-report screenshot, retained unchanged and visually reviewed.
+BINARY_FILES = {"docs/images/m3-preview.jpg": "248d7a307279bfc8b55931d40168aa87a4dedbb3f171a1d04a66fb19ee23b389"}
 PATTERNS = {
     "github_token": r"\b(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,})\b",
     "aws_access_key": r"\b(?:AKIA|ASIA)[A-Z0-9]{16}\b",
@@ -40,6 +42,11 @@ def inspect():
     digests = {}
     for path in files:
         relative = path.relative_to(ROOT).as_posix()
+        if relative in BINARY_FILES:
+            digests[relative] = hashlib.sha256(path.read_bytes()).hexdigest()
+            if digests[relative] != BINARY_FILES[relative]:
+                findings.append({"path": relative, "rule": "binary_asset_changed_requires_review"})
+            continue
         if path.suffix not in {".md", ".json", ".py", ".txt"} and path.name not in {".gitignore", ".gitattributes", "LICENSE"}:
             findings.append({"path": relative, "rule": "unapproved_file_type"})
             continue
